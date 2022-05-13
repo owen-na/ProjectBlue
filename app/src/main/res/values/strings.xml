@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">SearchProv0.1</string>
+    <string name="project_blue">Project Blue</string>
+    <string name="logo">logo</string>
+    <string name="register">Register</string>
+    <string name="username_email">Username/Email</string>
+    <string name="password">Password</string>
+    <string name="i_agree_to_the_terms_of_service">I agree to the Terms of Service</string>
+    <string name="repeat_password">Repeat Password</string>
+    <string name="already_a_member_sign_in">Already a member? Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="repeatLogo">logo</string>
+</resources>
