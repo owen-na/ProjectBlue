@@ -13,12 +13,9 @@ public class InitialLoading extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_loading);
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-           @Override
-           public void run() {
-               startActivity(new Intent(InitialLoading.this, MainActivity.class));
-               finish();
-           }
-       }, 3000);
+        handler.post(() -> {
+            startActivity(new Intent(InitialLoading.this, MainActivity.class));
+            finish();
+        });
     }
 }
