@@ -5,7 +5,7 @@
     <string name="register">Register</string>
     <string name="username_email">Username/Email</string>
     <string name="password">Password</string>
-    <string name="i_agree_to_the_terms_of_service">I agree to the <a href="D:\Internet DLs\SearchProv01\app\src\main\res\layout\termsofservicetext.xml">Terms of Service</a></string>
+    <string name="i_agree_to_the_terms_of_service">I agree to the Terms of Service</string>
     <string name="repeat_password">Repeat Password</string>
     <string name="already_a_member_sign_in">Already a member? <a href="D:\Internet DLs\SearchProv01\app\src\main\res\layout\termsofservicetext.xml">Sign In</a></string>
     <string name="sign_up">Sign Up</string>
@@ -15,4 +15,7 @@
     <string name="Text">Practice Text</string>
     <string name="textview">Hello! I\'m taking your data!</string>
     <string name="termsofService">testing</string>
+    <string name="realTermsOfService"><a href="D:\Internet DLs\SearchProv01\app\src\main\res\layout\termsofservicetext.xml">Terms of Service</a></string>
+    <string name="login">Login</string>
+    <string name="remember_me">Remember Me</string>
 </resources>
