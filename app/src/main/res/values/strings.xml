@@ -18,4 +18,9 @@
     <string name="realTermsOfService"><a href="D:\Internet DLs\SearchProv01\app\src\main\res\layout\termsofservicetext.xml">Terms of Service</a></string>
     <string name="login">Login</string>
     <string name="remember_me">Remember Me</string>
+    <string name="title_activity_main_screen">MainScreen</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="welcome_to_project_blue">Welcome to Project Blue!</string>
 </resources>
