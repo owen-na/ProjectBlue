@@ -11,6 +11,10 @@ import android.util.Patterns;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity {
 
     boolean progressToMain;
@@ -115,6 +119,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, Login_page.class));
             }
         });
+    }
+
+    public JSONObject makeJsonObject(int userID[], String email[], String realPassword[], int uniqueUsers)
+    throws JSONException {
+        JSONObject obj = null;
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < uniqueUsers; i++) {
+            obj = new JSONObject();
+            try {
+                obj.put("userId", userID[i]);
+                obj.put("email", email[i]);
+                obj.put("realPassword", realPassword[i]);
+            } catch (JSONException je) {
+                je.printStackTrace();
+            }
+            jsonArray.put(obj);
+        }
+        JSONObject finalobject = new JSONObject();
+        finalobject.put("user", jsonArray);
+        return finalobject;
     }
 
 }
