@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
         confirmPassword=findViewById(R.id.confirmpassword);
 
         //sends alert to user if they have an invalid input
-        emailError=findViewById(R.id.emailAlert);
-        passwordError=findViewById(R.id.passwordAlert);
-        confirmPassError=findViewById(R.id.passwordAlert);
+        emailError=findViewById(R.id.textView4);
+        passwordError=findViewById(R.id.textView14);
+        confirmPassError=findViewById(R.id.textView5);
 
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override

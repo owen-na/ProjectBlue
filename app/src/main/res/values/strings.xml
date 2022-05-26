@@ -23,4 +23,8 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="welcome_to_project_blue">Welcome to Project Blue!</string>
+    <string name="total_stock_sold">Total Stock Sold</string>
+    <string name="look_into_the_week">Look into the week</string>
+    <string name="raw_profits">Raw Profits</string>
+    <string name="net_profits">Net Profits</string>
 </resources>
