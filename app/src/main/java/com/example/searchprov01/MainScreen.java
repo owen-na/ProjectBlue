@@ -2,6 +2,8 @@ package com.example.searchprov01;
 
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -41,7 +43,14 @@ public class MainScreen extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
+
+        Spinner spinner = findViewById(R.id.time_intervals);
         linechart = findViewById(R.id.profit_chart);
+
+        // The comboBox (known as a Spinner)
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.time_amounts, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
         // linechart.setOnChartGestureListener(MainScreen.this);
         // linechart.setOnChartValueSelectedListener(MainScreen.this);
