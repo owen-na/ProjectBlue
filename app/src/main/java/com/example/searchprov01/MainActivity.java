@@ -17,7 +17,9 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean progressToMain;
+    boolean progressToMain = false;
+    boolean emailVerification = false;
+    boolean passwordVerification = false;
     boolean validTos;
 
     Button signUp;
@@ -41,13 +43,14 @@ public class MainActivity extends AppCompatActivity {
         passwordError=findViewById(R.id.textView14);
         confirmPassError=findViewById(R.id.textView5);
 
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                validateEmail();
-                validatePassword();
-            }
-        });
+            signUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    validateEmail();
+                    validatePassword();
+                    verificationCheck();
+                }
+            });
 
     }
 
@@ -66,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
             emailError.setText("Invalid Email");
             return false;
         } else {
-            emailError.setError(null);
+            emailError.setText(""); // emailError.setError(null)
+            emailVerification = true;
             return true;
         }
     }
@@ -93,11 +97,17 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }else {
             confirmPassError.setText("");
+            passwordError.setText("");
+            passwordVerification = true;
             return true;
         }
     }
 
-
+    private void verificationCheck() {
+        if (emailVerification == true && passwordVerification == true) {
+            progressToMain = true;
+        }
+    }
 
     private void agreeToToS() {
         TextView hyperLink = (TextView) findViewById(R.id.textView9);
@@ -120,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     public JSONObject makeJsonObject(int userID[], String email[], String realPassword[], int uniqueUsers)
     throws JSONException {
