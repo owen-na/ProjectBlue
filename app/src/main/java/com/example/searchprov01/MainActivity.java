@@ -15,12 +15,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     boolean progressToMain = false;
     boolean emailVerification = false;
     boolean passwordVerification = false;
-    boolean validTos;
+    int[] userId = new int[50];
+    String[] userEmail = new String[50];
+    String[] userPassword = new String[50];
+    int uniqueUserCount = 0;
 
     Button signUp;
     EditText email,password,confirmPassword;
@@ -48,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     validateEmail();
                     validatePassword();
-                    verificationCheck();
+                    try {
+                        verificationCheck();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -103,9 +113,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void verificationCheck() {
+    private void verificationCheck() throws JSONException {
         if (emailVerification == true && passwordVerification == true) {
             progressToMain = true;
+            uniqueUserCount++;
+            makeJsonObject(userId, userEmail, userPassword, uniqueUserCount);
+            signUp.setMovementMethod(LinkMovementMethod.getInstance());
+            signUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(MainActivity.this, MainScreen.class));
+                }
+            });
         }
     }
 
@@ -132,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public JSONObject makeJsonObject(int userID[], String email[], String realPassword[], int uniqueUsers)
+    public void makeJsonObject(int[] userID, String[] email, String[] realPassword, int uniqueUsers)
     throws JSONException {
         JSONObject obj = null;
         JSONArray jsonArray = new JSONArray();
@@ -149,7 +168,13 @@ public class MainActivity extends AppCompatActivity {
         }
         JSONObject finalobject = new JSONObject();
         finalobject.put("user", jsonArray);
-        return finalobject;
+        try (FileWriter file = new FileWriter("infoJson.json")) {
+            file.write(jsonArray.toString());
+            file.flush();
+        } catch (IOException ie) {
+            ie.printStackTrace();
+        }
+        System.out.println(jsonArray);
     }
 
 }
