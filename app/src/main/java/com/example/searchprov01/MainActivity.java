@@ -56,13 +56,15 @@ public class MainActivity extends AppCompatActivity {
                     validatePassword();
                     try {
                         verificationCheck();
+                        startActivity(new Intent(MainActivity.this, MainScreen.class));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
-            });
+                    }
+                });
+            }
 
-    }
+
 
     /**
      * Takes the input from the user in the email textbox and turns it into a string.
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             emailError.setText(""); // emailError.setError(null)
             emailVerification = true;
+            userEmail[uniqueUserCount] = emailInput;
             return true;
         }
     }
@@ -108,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         }else {
             confirmPassError.setText("");
             passwordError.setText("");
+            userPassword[uniqueUserCount] = ConfitmpasswordInput;
             passwordVerification = true;
             return true;
         }
@@ -117,14 +121,8 @@ public class MainActivity extends AppCompatActivity {
         if (emailVerification == true && passwordVerification == true) {
             progressToMain = true;
             uniqueUserCount++;
+            userId[uniqueUserCount] = uniqueUserCount;
             makeJsonObject(userId, userEmail, userPassword, uniqueUserCount);
-            signUp.setMovementMethod(LinkMovementMethod.getInstance());
-            signUp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(MainActivity.this, MainScreen.class));
-                }
-            });
         }
     }
 
@@ -151,12 +149,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void makeJsonObject(int[] userID, String[] email, String[] realPassword, int uniqueUsers)
-    throws JSONException {
-        JSONObject obj = null;
+    public void makeJsonObject(int[] userID, String[] email, String[] realPassword, int uniqueUsers) {
         JSONArray jsonArray = new JSONArray();
         for (int i = 0; i < uniqueUsers; i++) {
-            obj = new JSONObject();
+            JSONObject obj = new JSONObject();
             try {
                 obj.put("userId", userID[i]);
                 obj.put("email", email[i]);
@@ -166,15 +162,11 @@ public class MainActivity extends AppCompatActivity {
             }
             jsonArray.put(obj);
         }
-        JSONObject finalobject = new JSONObject();
-        finalobject.put("user", jsonArray);
-        try (FileWriter file = new FileWriter("D:/infoJson.json")) {
+        try (FileWriter file = new FileWriter("infoJson.json")) {
             file.write(jsonArray.toString());
-            file.flush();
         } catch (IOException ie) {
             ie.printStackTrace();
         }
-        System.out.println(jsonArray);
     }
 
 }
