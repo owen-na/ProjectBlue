@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         }
         JSONObject finalobject = new JSONObject();
         finalobject.put("user", jsonArray);
-        try (FileWriter file = new FileWriter("infoJson.json")) {
+        try (FileWriter file = new FileWriter("D:/infoJson.json")) {
             file.write(jsonArray.toString());
             file.flush();
         } catch (IOException ie) {
