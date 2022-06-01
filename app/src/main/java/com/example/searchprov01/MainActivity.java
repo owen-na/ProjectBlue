@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     validateEmail();
                     validatePassword();
-                    try {
+                     try {
                         verificationCheck();
                         startActivity(new Intent(MainActivity.this, MainScreen.class));
                     } catch (JSONException e) {
@@ -120,8 +120,8 @@ public class MainActivity extends AppCompatActivity {
     private void verificationCheck() throws JSONException {
         if (emailVerification == true && passwordVerification == true) {
             progressToMain = true;
-            uniqueUserCount++;
             userId[uniqueUserCount] = uniqueUserCount;
+            uniqueUserCount++;
             makeJsonObject(userId, userEmail, userPassword, uniqueUserCount);
         }
     }
@@ -151,17 +151,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void makeJsonObject(int[] userID, String[] email, String[] realPassword, int uniqueUsers) {
         JSONArray jsonArray = new JSONArray();
-        for (int i = 0; i < uniqueUsers; i++) {
-            JSONObject obj = new JSONObject();
+        JSONObject obj = new JSONObject();
             try {
-                obj.put("userId", userID[i]);
-                obj.put("email", email[i]);
-                obj.put("realPassword", realPassword[i]);
+                obj.put("userId", userID[uniqueUsers]);
+                obj.put("email", email[uniqueUsers]);
+                obj.put("realPassword", realPassword[uniqueUsers]);
             } catch (JSONException je) {
                 je.printStackTrace();
             }
             jsonArray.put(obj);
-        }
         try (FileWriter file = new FileWriter("infoJson.json")) {
             file.write(jsonArray.toString());
         } catch (IOException ie) {
