@@ -11,4 +11,6 @@ public class Login_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
     }
+
+
 }

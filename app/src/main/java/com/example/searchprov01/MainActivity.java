@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.util.Patterns;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     boolean progressToMain = false;
     boolean emailVerification = false;
     boolean passwordVerification = false;
+    boolean termsOfServiceVerification = false;
     int[] userId = new int[50];
     String[] userEmail = new String[50];
     String[] userPassword = new String[50];
@@ -108,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         if (!passwordInput.equals(ConfitmpasswordInput)) {
             confirmPassError.setText("Passwords do not match");
             return false;
-        }else {
+        } else {
             confirmPassError.setText("");
             passwordError.setText("");
             userPassword[uniqueUserCount] = ConfitmpasswordInput;
@@ -117,8 +119,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void checkToS() {
+        CheckBox check = findViewById(R.id.checkBox);
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (check.isChecked()) {
+                    termsOfServiceVerification = false;
+                } else {
+                    termsOfServiceVerification = true;
+                }
+            }
+        });
+    }
+
     private void verificationCheck() throws JSONException {
-        if (emailVerification == true && passwordVerification == true) {
+        if (emailVerification == true && passwordVerification == true && termsOfServiceVerification == true) {
             progressToMain = true;
             userId[uniqueUserCount] = uniqueUserCount;
             uniqueUserCount++;
