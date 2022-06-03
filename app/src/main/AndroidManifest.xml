@@ -14,11 +14,6 @@
         android:theme="@style/Theme.SearchProv01"
         tools:targetApi="31">
         <activity
-            android:name=".inventoryView"
-            android:exported="false"
-            android:label="@string/title_activity_inventory_view"
-            android:theme="@style/Theme.SearchProv01.NoActionBar" />
-        <activity
             android:name=".MainScreen"
             android:exported="false"
             android:label="@string/title_activity_main_screen" />
