@@ -1,8 +1,12 @@
 package com.example.searchprov01;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -26,9 +30,15 @@ public class MainScreen extends AppCompatActivity {
     private ActivityMainScreenBinding binding;
     private LineChart linechart;
 
+    Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        button = findViewById(R.id.button4);
+
+        toInventory();
 
         binding = ActivityMainScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -54,6 +64,16 @@ public class MainScreen extends AppCompatActivity {
 
         linechart.setDragEnabled(true);
         linechart.setScaleEnabled(false);
+    }
+
+    private void toInventory() {
+        button.setMovementMethod(LinkMovementMethod.getInstance());
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainScreen.this, inventoryView.class));
+            }
+        });
     }
 }
 
