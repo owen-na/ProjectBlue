@@ -24,15 +24,15 @@
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/profit_chart"
-        android:layout_width="384dp"
-        android:layout_height="316dp"
-        android:layout_marginTop="232dp"
+        android:layout_width="369dp"
+        android:layout_height="247dp"
+        android:layout_marginBottom="160dp"
         app:layout_constraintBottom_toBottomOf="@+id/nav_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8"
-        app:layout_constraintVertical_bias="0.137" />
+        app:layout_constraintVertical_bias="0.952" />
 
     <TextView
         android:id="@+id/textView8"
