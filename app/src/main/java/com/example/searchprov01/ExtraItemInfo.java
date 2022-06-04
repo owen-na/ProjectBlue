@@ -7,29 +7,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class AddingItem extends AppCompatActivity {
+public class ExtraItemInfo extends AppCompatActivity {
 
     Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        button = findViewById(R.id.button6);
+        button = findViewById(R.id.button7);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adding_item);
-        toExtra();
+        setContentView(R.layout.activity_extra_item_info);
+        toAddingItem();
     }
 
-    private void toExtra() {
+    private void toAddingItem() {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AddingItem.this, ExtraItemInfo.class));
+                startActivity(new Intent(ExtraItemInfo.this, AddingItem.class));
             }
         });
     }
 
-    // NEED JSON METHOD
+    //  NEED JSON METHOD
 
 }

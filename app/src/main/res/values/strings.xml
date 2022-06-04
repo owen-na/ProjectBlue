@@ -47,7 +47,7 @@
     <string name="price">Price</string>
     <string name="amount_in_stock">Amount In Stock</string>
     <string name="profit_per_sold">Profit per sold (%)</string>
-    <string name="weight">Weight</string>
+    <string name="weight">Weight (g)</string>
     <string name="extra">Extra</string>
     <string name="submit">submit</string>
 
