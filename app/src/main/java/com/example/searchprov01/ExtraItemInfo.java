@@ -20,6 +20,8 @@ public class ExtraItemInfo extends AppCompatActivity {
 
     Button button;
 
+    boolean verification = false;
+
     JSONArray secretValues;
 
     int lastCounter;
@@ -52,7 +54,7 @@ public class ExtraItemInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extra_item_info);
 
-        toAddingItem();
+        checkVerification();
         getIdNumber();
         getWeight();
         getThickness();
@@ -75,7 +77,13 @@ public class ExtraItemInfo extends AppCompatActivity {
 
     private void getIdNumber() {
         idNumberConverter = idNumberInput.getText().toString().trim();
-        idNumber[lastCounter] = Integer.parseInt(idNumberConverter);
+        if (idNumberConverter.isEmpty()) {
+            Toast.makeText(ExtraItemInfo.this, "Invalid ID, cannot be blank", Toast.LENGTH_SHORT).show();
+            verification = false;
+        } else {
+            idNumber[lastCounter] = Integer.parseInt(idNumberConverter);
+            verification = true;
+        }
     }
 
     private void getWeight() {
@@ -84,8 +92,10 @@ public class ExtraItemInfo extends AppCompatActivity {
         weightChecker = Double.parseDouble(weightConverter);
         if (weightChecker <= 0.00) {
             Toast.makeText(ExtraItemInfo.this, "Invalid Weight, must be greater than 0.00", Toast.LENGTH_SHORT).show();
+            verification = false;
         } else {
             weight[lastCounter] = weightChecker;
+            verification = true;
         }
     }
 
@@ -95,8 +105,10 @@ public class ExtraItemInfo extends AppCompatActivity {
         thicknessChecker = Double.parseDouble(thicknessConverter);
         if (thicknessChecker <= 0.0) {
             Toast.makeText(ExtraItemInfo.this, "Invalid Thickness, must be greater than 0.0", Toast.LENGTH_SHORT).show();
+            verification = false;
         } else {
             thickness[lastCounter] = thicknessChecker;
+            verification = true;
         }
     }
 
@@ -106,8 +118,17 @@ public class ExtraItemInfo extends AppCompatActivity {
         ratioChecker = Double.parseDouble(profitConverter);
         if (ratioChecker <= 0.000) {
             Toast.makeText(ExtraItemInfo.this, "Invaild Profit Ratio, must be greater than 0.000", Toast.LENGTH_SHORT).show();
+            verification = false;
         } else {
             profitRatio[lastCounter] = ratioChecker;
+            verification = true;
+        }
+    }
+
+    private void checkVerification () {
+        if (verification = true) {
+            toAddingItem();
+            lastCounter++;
         }
     }
 

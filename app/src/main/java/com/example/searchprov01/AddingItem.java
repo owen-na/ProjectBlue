@@ -20,7 +20,8 @@ public class AddingItem extends AppCompatActivity {
 
     Button button;
     Button button2;
-    int counter;
+    int counter = 0;
+    boolean globalVerification;
     String priceConverter;
     String stockConverter;
     String lengthConverter;
@@ -49,7 +50,7 @@ public class AddingItem extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_adding_item);
-        toExtra();
+        checkGlobalVerification();
         getItemName();
         getRawPrice();
         getStockAmount();
@@ -68,7 +69,15 @@ public class AddingItem extends AppCompatActivity {
     }
 
     private void getItemName() {
-        itemName[counter] = itemNameInput.getText().toString().trim();
+        String nameChecker;
+        nameChecker = itemNameInput.getText().toString().trim();
+        if (nameChecker.isEmpty()) {
+            Toast.makeText(AddingItem.this, "Invalid Name, cannot be left blank", Toast.LENGTH_SHORT).show();
+            globalVerification = false;
+        } else {
+            itemName[counter] = nameChecker;
+            globalVerification = true;
+        }
     }
 
     private void getRawPrice() {
@@ -77,8 +86,10 @@ public class AddingItem extends AppCompatActivity {
         priceChecker = Integer.parseInt(priceConverter);
         if (priceChecker <= 0) {
             Toast.makeText(AddingItem.this, "Raw Price must be greater than or equal to 0", Toast.LENGTH_SHORT).show();
+            globalVerification = false;
         } else {
             price[counter] = priceChecker;
+            globalVerification = true;
         }
     }
 
@@ -88,8 +99,10 @@ public class AddingItem extends AppCompatActivity {
         StockChecker = Integer.parseInt(stockConverter);
         if (StockChecker <= 0) {
             Toast.makeText(AddingItem.this, "There must be more than one in stock", Toast.LENGTH_SHORT).show();
+            globalVerification = false;
         } else {
             amountInStock[counter] = StockChecker;
+            globalVerification = true;
         }
     }
 
@@ -99,8 +112,17 @@ public class AddingItem extends AppCompatActivity {
         lengthChecker = Integer.parseInt(lengthConverter);
         if (lengthChecker <= 0) {
             Toast.makeText(AddingItem.this, "Invalid Length, must be longer than 0 inches", Toast.LENGTH_SHORT).show();
+            globalVerification = false;
         } else {
             length[counter] = lengthChecker;
+            globalVerification = true;
+        }
+    }
+
+    private void checkGlobalVerification() {
+        if (globalVerification = true) {
+            toExtra();
+            counter++;
         }
     }
 
