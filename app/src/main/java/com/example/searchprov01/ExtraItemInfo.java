@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,18 +79,36 @@ public class ExtraItemInfo extends AppCompatActivity {
     }
 
     private void getWeight() {
+        double weightChecker;
         weightConverter = weightInput.getText().toString().trim();
-        weight[lastCounter] = Integer.parseInt(weightConverter);
+        weightChecker = Double.parseDouble(weightConverter);
+        if (weightChecker <= 0.00) {
+            Toast.makeText(ExtraItemInfo.this, "Invalid Weight, must be greater than 0.00", Toast.LENGTH_SHORT).show();
+        } else {
+            weight[lastCounter] = weightChecker;
+        }
     }
 
     private void getThickness() {
+        double thicknessChecker;
         thicknessConverter = thicknessInput.getText().toString().trim();
-        thickness[lastCounter] = Integer.parseInt(thicknessConverter);
+        thicknessChecker = Double.parseDouble(thicknessConverter);
+        if (thicknessChecker <= 0.0) {
+            Toast.makeText(ExtraItemInfo.this, "Invalid Thickness, must be greater than 0.0", Toast.LENGTH_SHORT).show();
+        } else {
+            thickness[lastCounter] = thicknessChecker;
+        }
     }
 
     private void getProfitRatio() {
+        double ratioChecker;
         profitConverter = profitInput.getText().toString().trim();
-        profitRatio[lastCounter] = Integer.parseInt(profitConverter);
+        ratioChecker = Double.parseDouble(profitConverter);
+        if (ratioChecker <= 0.000) {
+            Toast.makeText(ExtraItemInfo.this, "Invaild Profit Ratio, must be greater than 0.000", Toast.LENGTH_SHORT).show();
+        } else {
+            profitRatio[lastCounter] = ratioChecker;
+        }
     }
 
     private void makeJsonObject(int[] idNumber, double[] weight, double[] thickness, double[] profitRatio) {

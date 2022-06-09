@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,18 +72,36 @@ public class AddingItem extends AppCompatActivity {
     }
 
     private void getRawPrice() {
+        int priceChecker;
         priceConverter = priceInput.getText().toString().trim();
-        price[counter] = Integer.parseInt(priceConverter);
+        priceChecker = Integer.parseInt(priceConverter);
+        if (priceChecker <= 0) {
+            Toast.makeText(AddingItem.this, "Raw Price must be greater than or equal to 0", Toast.LENGTH_SHORT).show();
+        } else {
+            price[counter] = priceChecker;
+        }
     }
 
     private void getStockAmount() {
+        int StockChecker;
         stockConverter = amountInStockInput.getText().toString().trim();
-        amountInStock[counter] = Integer.parseInt(stockConverter);
+        StockChecker = Integer.parseInt(stockConverter);
+        if (StockChecker <= 0) {
+            Toast.makeText(AddingItem.this, "There must be more than one in stock", Toast.LENGTH_SHORT).show();
+        } else {
+            amountInStock[counter] = StockChecker;
+        }
     }
 
     private void getLength() {
+        int lengthChecker;
         lengthConverter = lengthInput.getText().toString().trim();
-        length[counter] = Integer.parseInt(lengthConverter);
+        lengthChecker = Integer.parseInt(lengthConverter);
+        if (lengthChecker <= 0) {
+            Toast.makeText(AddingItem.this, "Invalid Length, must be longer than 0 inches", Toast.LENGTH_SHORT).show();
+        } else {
+            length[counter] = lengthChecker;
+        }
     }
 
     private void exitOut() {
