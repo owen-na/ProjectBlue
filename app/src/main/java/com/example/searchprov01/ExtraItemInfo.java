@@ -129,6 +129,7 @@ public class ExtraItemInfo extends AppCompatActivity {
         if (verification = true) {
             toAddingItem();
             lastCounter++;
+            toInventory();
         }
     }
 
@@ -148,6 +149,10 @@ public class ExtraItemInfo extends AppCompatActivity {
         } catch (IOException ie) {
             ie.printStackTrace();
         }
+    }
+
+    private void toInventory() {
+        startActivity(new Intent(ExtraItemInfo.this, inventoryView.class));
     }
 
 }
