@@ -32,7 +32,7 @@ public class AddingItem extends AppCompatActivity {
     EditText lengthInput;
 
     String[] itemName = new String[50];
-    int[] price = new int[50];
+    double[] price = new double[50];
     int[] amountInStock = new int[50];
     int[] length = new int[50];
 
@@ -81,11 +81,11 @@ public class AddingItem extends AppCompatActivity {
     }
 
     private void getRawPrice() {
-        int priceChecker;
+        double priceChecker;
         priceConverter = priceInput.getText().toString().trim();
-        priceChecker = Integer.parseInt(priceConverter);
+        priceChecker = Double.parseDouble(priceConverter);
         if (priceChecker <= 0) {
-            Toast.makeText(AddingItem.this, "Raw Price must be greater than or equal to 0", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddingItem.this, "Raw Price must be greater than or equal to 0.00", Toast.LENGTH_SHORT).show();
             globalVerification = false;
         } else {
             price[counter] = priceChecker;
@@ -135,7 +135,7 @@ public class AddingItem extends AppCompatActivity {
         });
     }
 
-    public void makeJsonObject(String[] itemName, int[] price, int[] amountInStock, int[] length) {
+    public void makeJsonObject(String[] itemName, double[] price, int[] amountInStock, int[] length) {
         JSONObject obj = new JSONObject();
         try {
             obj.put("itemName", itemName[counter]);
