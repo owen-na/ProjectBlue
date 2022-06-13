@@ -136,10 +136,10 @@ public class ExtraItemInfo extends AppCompatActivity {
     private void makeJsonObject(int[] idNumber, double[] weight, double[] thickness, double[] profitRatio) {
         JSONObject obj = new JSONObject();
         try {
-            obj.put("IDNumber", idNumber[lastCounter]);
-            obj.put("Weight", weight[lastCounter]);
-            obj.put("Thickness", thickness[lastCounter]);
-            obj.put("ProfitRatio", profitRatio[lastCounter]);
+            obj.put("iDNumber", idNumber[lastCounter]);
+            obj.put("weight", weight[lastCounter]);
+            obj.put("thickness", thickness[lastCounter]);
+            obj.put("profitRatio", profitRatio[lastCounter]);
         } catch (JSONException e) {
             e.printStackTrace();
         }
