@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -25,11 +26,15 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.searchprov01.databinding.ActivityMainScreenBinding;
 
-public class MainScreen extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private ActivityMainScreenBinding binding;
     private LineChart linechart;
 
+    Spinner spinner;
     Button button;
 
     @Override
@@ -39,7 +44,7 @@ public class MainScreen extends AppCompatActivity {
         button = findViewById(R.id.button4);
 
         toInventory();
-
+        spinnerFunctionailty();
         binding = ActivityMainScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -50,14 +55,26 @@ public class MainScreen extends AppCompatActivity {
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
                 .build();
 
-
-        Spinner spinner = findViewById(R.id.time_intervals);
         linechart = findViewById(R.id.profit_chart);
 
+
         // The comboBox (known as a Spinner)
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.time_amounts, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+
+        // ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.time_amounts, android.R.layout.simple_spinner_item);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getItemAtPosition(position).equals("1D")) {
+                } else {
+                    String option = parent.getItemAtPosition(position).toString();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         // linechart.setOnChartGestureListener(MainScreen.this);
         // linechart.setOnChartValueSelectedListener(MainScreen.this);
@@ -75,5 +92,42 @@ public class MainScreen extends AppCompatActivity {
             }
         });
     }
+
+    private void spinnerFunctionailty() {
+        spinner = findViewById(R.id.time_intervals);
+        List<String> timeIntervals = new ArrayList<>();
+        timeIntervals.add(0, "1D");
+        timeIntervals.add("1W");
+        timeIntervals.add("1M");
+        ArrayAdapter<String> adapter;
+        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, timeIntervals);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (parent.getItemAtPosition(position).equals("1D")) {
+                } else {
+                    String option = parent.getItemAtPosition(position).toString();
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }
+
 
