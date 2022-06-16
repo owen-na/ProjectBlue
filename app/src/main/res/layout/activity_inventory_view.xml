@@ -21,15 +21,15 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="16dp"
         android:text="new Item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.894"
+        app:layout_constraintHorizontal_bias="0.857"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
-        android:layout_width="390dp"
+        android:layout_width="match_parent"
         android:layout_height="536dp"
         android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"

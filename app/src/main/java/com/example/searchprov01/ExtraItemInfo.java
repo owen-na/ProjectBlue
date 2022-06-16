@@ -155,4 +155,7 @@ public class ExtraItemInfo extends AppCompatActivity {
         startActivity(new Intent(ExtraItemInfo.this, inventoryView.class));
     }
 
+    private void jsonToListing(View v) {
+
+    }
 }
