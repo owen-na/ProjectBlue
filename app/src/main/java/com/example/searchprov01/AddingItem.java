@@ -94,14 +94,14 @@ public class AddingItem extends AppCompatActivity {
     }
 
     private void getStockAmount() {
-        int StockChecker;
+        int stockChecker;
         stockConverter = amountInStockInput.getText().toString().trim();
-        StockChecker = Integer.parseInt(stockConverter);
-        if (StockChecker <= 0) {
+        stockChecker = Integer.parseInt(stockConverter);
+        if (stockChecker <= 0) {
             Toast.makeText(AddingItem.this, "There must be more than one in stock", Toast.LENGTH_SHORT).show();
             globalVerification = false;
         } else {
-            amountInStock[counter] = StockChecker;
+            amountInStock[counter] = stockChecker;
             globalVerification = true;
         }
     }

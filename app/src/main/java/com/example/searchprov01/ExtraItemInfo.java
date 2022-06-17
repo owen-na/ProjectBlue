@@ -22,8 +22,6 @@ public class ExtraItemInfo extends AppCompatActivity {
 
     boolean verification = false;
 
-    JSONArray secretValues;
-
     int lastCounter;
 
     int[] idNumber = new int[50];
@@ -62,18 +60,11 @@ public class ExtraItemInfo extends AppCompatActivity {
     }
 
     private void toAddingItem() {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    makeJsonObject(idNumber, weight, thickness, profitRatio);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                startActivity(new Intent(ExtraItemInfo.this, AddingItem.class));
-            }
+        button.setOnClickListener(v -> {
+            toInventory();
         });
     }
+
 
     private void getIdNumber() {
         idNumberConverter = idNumberInput.getText().toString().trim();
@@ -126,28 +117,9 @@ public class ExtraItemInfo extends AppCompatActivity {
     }
 
     private void checkVerification () {
-        if (verification = true) {
+        if (verification) {
             toAddingItem();
             lastCounter++;
-            toInventory();
-        }
-    }
-
-    private void makeJsonObject(int[] idNumber, double[] weight, double[] thickness, double[] profitRatio) {
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("IDNumber", idNumber[lastCounter]);
-            obj.put("Weight", weight[lastCounter]);
-            obj.put("Thickness", thickness[lastCounter]);
-            obj.put("ProfitRatio", profitRatio[lastCounter]);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        secretValues.put(obj);
-        try (FileWriter file = new FileWriter("SecretValues.json")) {
-            file.write(secretValues.toString());
-        } catch (IOException ie) {
-            ie.printStackTrace();
         }
     }
 
@@ -155,7 +127,6 @@ public class ExtraItemInfo extends AppCompatActivity {
         startActivity(new Intent(ExtraItemInfo.this, inventoryView.class));
     }
 
-    private void jsonToListing(View v) {
+    // 2 methods, one to store into the custom component, another to add it into the scrollView.
 
-    }
 }
