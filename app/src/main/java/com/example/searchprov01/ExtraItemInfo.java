@@ -119,12 +119,17 @@ public class ExtraItemInfo extends AppCompatActivity {
     private void checkVerification () {
         if (verification) {
             toAddingItem();
+            createCustomItem();
             lastCounter++;
         }
     }
 
     private void toInventory() {
         startActivity(new Intent(ExtraItemInfo.this, inventoryView.class));
+    }
+
+    private void createCustomItem() {
+        PrivateInfo itemSecret = new PrivateInfo(idNumber[lastCounter], weight[lastCounter], thickness[lastCounter], profitRatio[lastCounter]);
     }
 
     // 2 methods, one to store into the custom component, another to add it into the scrollView.

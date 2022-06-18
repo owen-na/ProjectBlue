@@ -36,7 +36,7 @@ public class AddingItem extends AppCompatActivity {
     int[] amountInStock = new int[50];
     int[] length = new int[50];
 
-    JSONArray inventory = new JSONArray();
+    ItemInfo item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,6 @@ public class AddingItem extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(AddingItem.this, ExtraItemInfo.class));
-                makeJsonObject(itemName, price, amountInStock, length);
             }
         });
     }
@@ -120,8 +119,9 @@ public class AddingItem extends AppCompatActivity {
     }
 
     private void checkGlobalVerification() {
-        if (globalVerification = true) {
+        if (globalVerification) {
             toExtra();
+            createVisibleItem();
             counter++;
         }
     }
@@ -135,23 +135,8 @@ public class AddingItem extends AppCompatActivity {
         });
     }
 
-    public void makeJsonObject(String[] itemName, double[] price, int[] amountInStock, int[] length) {
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("itemName", itemName[counter]);
-            obj.put("price", price[counter]);
-            obj.put("amountInStock", amountInStock[counter]);
-            obj.put("length", length[counter]);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        inventory.put(obj);
-        counter++;
-        try (FileWriter file = new FileWriter("inventoryJson.json")) {
-            file.write(inventory.toString());
-        } catch (IOException ie) {
-            ie.printStackTrace();
-        }
+    public void createVisibleItem() {
+        item = new ItemInfo(itemName[counter], price[counter], amountInStock[counter], length[counter]);
     }
 
 }
