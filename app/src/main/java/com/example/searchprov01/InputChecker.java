@@ -1,14 +1,16 @@
 package com.example.searchprov01;
 
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class InputChecker extends AppCompatActivity {
+
     protected String stringify(EditText editText) {
         return editText.getText().toString().trim();
     }
 
     protected void createToast(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT);
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
     }
 
     protected boolean stringValid(String str, String blankError) {

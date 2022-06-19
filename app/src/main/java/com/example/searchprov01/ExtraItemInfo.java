@@ -9,35 +9,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
+import java.util.ArrayList;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
-public class ExtraItemInfo extends AppCompatActivity {
+public class ExtraItemInfo extends InputChecker {
 
     Button submitButton;
 
-    boolean verification = false;
-
-    int lastCounter;
-
-    int[] idNumber = new int[50];
-    double[] weight = new double[50];
-    double[] thickness = new double[50];
-    double[] profitRatio = new double[50];
+    List<Integer> ids = new ArrayList<>();
+    List<Double> weights = new ArrayList<>();
+    List<Double> thicknesses = new ArrayList<>();
+    List<Double> profitRatios = new ArrayList<>();
 
     EditText idNumberInput;
     EditText weightInput;
     EditText thicknessInput;
     EditText profitInput;
-
-    String idNumberConverter;
-    String weightConverter;
-    String thicknessConverter;
-    String profitConverter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +39,7 @@ public class ExtraItemInfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extra_item_info);
 
-        checkVerification();
-        getIdNumber();
-        getWeight();
-        getThickness();
-        getProfitRatio();
+        toInventory();
     }
 
     private void toAddingItem() {
@@ -65,74 +48,40 @@ public class ExtraItemInfo extends AppCompatActivity {
         });
     }
 
-
-    private void getIdNumber() {
-        idNumberConverter = idNumberInput.getText().toString().trim();
-        if (idNumberConverter.isEmpty()) {
-            Toast.makeText(ExtraItemInfo.this, "Invalid ID, cannot be blank", Toast.LENGTH_SHORT).show();
-            verification = false;
-        } else {
-            idNumber[lastCounter] = Integer.parseInt(idNumberConverter);
-            verification = true;
-        }
-    }
-
-    private void getWeight() {
-        double weightChecker;
-        weightConverter = weightInput.getText().toString().trim();
-        weightChecker = Double.parseDouble(weightConverter);
-        if (weightChecker <= 0.00) {
-            Toast.makeText(ExtraItemInfo.this, "Invalid Weight, must be greater than 0.00", Toast.LENGTH_SHORT).show();
-            verification = false;
-        } else {
-            weight[lastCounter] = weightChecker;
-            verification = true;
-        }
-    }
-
-    private void getThickness() {
-        double thicknessChecker;
-        thicknessConverter = thicknessInput.getText().toString().trim();
-        thicknessChecker = Double.parseDouble(thicknessConverter);
-        if (thicknessChecker <= 0.0) {
-            Toast.makeText(ExtraItemInfo.this, "Invalid Thickness, must be greater than 0.0", Toast.LENGTH_SHORT).show();
-            verification = false;
-        } else {
-            thickness[lastCounter] = thicknessChecker;
-            verification = true;
-        }
-    }
-
-    private void getProfitRatio() {
-        double ratioChecker;
-        profitConverter = profitInput.getText().toString().trim();
-        ratioChecker = Double.parseDouble(profitConverter);
-        if (ratioChecker <= 0.000) {
-            Toast.makeText(ExtraItemInfo.this, "Invaild Profit Ratio, must be greater than 0.000", Toast.LENGTH_SHORT).show();
-            verification = false;
-        } else {
-            profitRatio[lastCounter] = ratioChecker;
-            verification = true;
-        }
-    }
-
-    private void checkVerification () {
-        if (verification) {
-            toAddingItem();
-            createCustomItem();
-            lastCounter++;
-        }
-    }
-
     private void toInventory() {
-        startActivity(new Intent(ExtraItemInfo.this, inventoryView.class));
+        submitButton.setOnClickListener(v -> {
+            if (allValid()) {
+                createCustomItem();
+                startActivity(new Intent(ExtraItemInfo.this, inventoryView.class));
+            } else {
+                createToast("All inputs are not filled");
+            }
+        });
+    }
+
+    private void allValid() {
+        String id = stringify(idNumberInput);
+        String weight = stringify(weightInput);
+        String thickness = stringify(thicknessInput);
+        String profitRatio = stringify(profitInput);
+
+        if (intValid(id, "ID cannot be blank", "ID must be a whole number") &&
+                doubleValid(weight, "Weight must be greater than 0", "Weight must be a number") &&
+                doubleValid(thickness, "Thickness must be greater than 0", "Thickness must be a number") &&
+                doubleValid(profitRatio, "Profit Ratio must be greater than 0", "Profit Ratio must be a number")) {
+            ids.add(Integer.parseInt(id));
+            weights.add(Double.parseDouble(weight));
+            thicknesses.add(Double.parseDouble(thickness));
+            profitRatios.add(Double.parseDouble(profitRatio));
+        }
     }
 
     private void createCustomItem() {
-        PrivateInfo itemSecret = new PrivateInfo(idNumber[lastCounter], weight[lastCounter], thickness[lastCounter], profitRatio[lastCounter]);
+        // PrivateInfo itemSecret = new PrivateInfo(idNumber[lastCounter], weight[lastCounter], thickness[lastCounter], profitRatio[lastCounter]);
 
     }
 
-    // 2 methods, one to store into the custom component, another to add it into the scrollView.
+    // 2 methods, one to store into the custom component, another to add it into the
+    // scrollView.
 
 }
