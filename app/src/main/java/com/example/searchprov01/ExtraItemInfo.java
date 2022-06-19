@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class ExtraItemInfo extends AppCompatActivity {
 
-    Button button;
+    Button submitButton;
 
     boolean verification = false;
 
@@ -42,7 +42,7 @@ public class ExtraItemInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        button = findViewById(R.id.button7);
+        submitButton = findViewById(R.id.button7);
 
         idNumberInput = findViewById(R.id.editTextNumber4);
         weightInput = findViewById(R.id.editTextNumberDecimal2);
@@ -60,7 +60,7 @@ public class ExtraItemInfo extends AppCompatActivity {
     }
 
     private void toAddingItem() {
-        button.setOnClickListener(v -> {
+        submitButton.setOnClickListener(v -> {
             toInventory();
         });
     }
@@ -130,6 +130,7 @@ public class ExtraItemInfo extends AppCompatActivity {
 
     private void createCustomItem() {
         PrivateInfo itemSecret = new PrivateInfo(idNumber[lastCounter], weight[lastCounter], thickness[lastCounter], profitRatio[lastCounter]);
+
     }
 
     // 2 methods, one to store into the custom component, another to add it into the scrollView.
