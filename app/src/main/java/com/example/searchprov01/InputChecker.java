@@ -3,7 +3,9 @@ package com.example.searchprov01;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class InputChecker extends AppCompatActivity {
+public abstract class InputChecker extends AppCompatActivity {
+
+    protected abstract void allValid();
 
     protected String stringify(EditText editText) {
         return editText.getText().toString().trim();

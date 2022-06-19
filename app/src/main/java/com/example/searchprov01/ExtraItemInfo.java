@@ -59,7 +59,8 @@ public class ExtraItemInfo extends InputChecker {
         });
     }
 
-    private void allValid() {
+    @Override
+    protected void allValid() {
         String id = stringify(idNumberInput);
         String weight = stringify(weightInput);
         String thickness = stringify(thicknessInput);

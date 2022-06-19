@@ -57,7 +57,8 @@ public class AddingItem extends InputChecker {
         });
     }
 
-    private void allValid() {
+    @Override
+    protected void allValid() {
         String itemName = stringify(itemNameInput);
         String price = stringify(priceInput);
         String stockAmount = stringify(amountInStockInput);
