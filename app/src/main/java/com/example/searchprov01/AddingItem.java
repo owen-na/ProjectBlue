@@ -71,7 +71,7 @@ public class AddingItem extends InputChecker {
             itemNames.add(itemName);
             prices.add(Double.parseDouble(price));
             stockAmounts.add(Integer.parseInt(stockAmount));
-            lengths.add(Integer.parseInt(lengths));
+            lengths.add(Integer.parseInt(length));
         }
     }
 
