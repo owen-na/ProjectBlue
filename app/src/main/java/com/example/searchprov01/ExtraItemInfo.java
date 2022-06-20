@@ -60,7 +60,7 @@ public class ExtraItemInfo extends InputChecker {
     }
 
     @Override
-    protected void allValid() {
+    protected boolean allValid() {
         String id = stringify(idNumberInput);
         String weight = stringify(weightInput);
         String thickness = stringify(thicknessInput);
@@ -74,7 +74,9 @@ public class ExtraItemInfo extends InputChecker {
             weights.add(Double.parseDouble(weight));
             thicknesses.add(Double.parseDouble(thickness));
             profitRatios.add(Double.parseDouble(profitRatio));
+            return true;
         }
+        return false;
     }
 
     private void createCustomItem() {

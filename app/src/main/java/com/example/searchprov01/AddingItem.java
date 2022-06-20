@@ -58,7 +58,7 @@ public class AddingItem extends InputChecker {
     }
 
     @Override
-    protected void allValid() {
+    protected boolean allValid() {
         String itemName = stringify(itemNameInput);
         String price = stringify(priceInput);
         String stockAmount = stringify(amountInStockInput);
@@ -72,7 +72,9 @@ public class AddingItem extends InputChecker {
             prices.add(Double.parseDouble(price));
             stockAmounts.add(Integer.parseInt(stockAmount));
             lengths.add(Integer.parseInt(length));
+            return true;
         }
+        return false;
     }
 
     private void exitOut() {
