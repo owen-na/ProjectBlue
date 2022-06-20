@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 public abstract class InputChecker extends AppCompatActivity {
 
-    protected abstract void allValid();
+    protected abstract boolean allValid();
 
     protected String stringify(EditText editText) {
         return editText.getText().toString().trim();
