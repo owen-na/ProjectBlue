@@ -49,7 +49,7 @@ public class AddingItem extends InputChecker {
     private void toExtra() {
         extraButton.setOnClickListener(v -> {
             if (allValid()) {
-                createCustomItem();
+                createVisibleItem();
                 startActivity(new Intent(AddingItem.this, ExtraItemInfo.class));
             } else {
                 createToast("All inputs are not filled");

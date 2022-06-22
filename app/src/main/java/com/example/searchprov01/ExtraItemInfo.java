@@ -1,9 +1,11 @@
 package com.example.searchprov01;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -80,6 +82,11 @@ public class ExtraItemInfo extends InputChecker {
     }
 
     private void createCustomItem() {
+        View inventory, item;
+        item = getLayoutInflater().inflate(R.layout.item_info, null);
+        inventory = findViewById(R.id.inventoryShow);
+        inventory.addView(item);
+        // View customComponent = itembox.inflate(R.layout.item_info, null);
         // PrivateInfo itemSecret = new PrivateInfo(idNumber[lastCounter], weight[lastCounter], thickness[lastCounter], profitRatio[lastCounter]);
 
     }
