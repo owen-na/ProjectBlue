@@ -27,6 +27,7 @@ public class ExtraItemInfo extends InputChecker {
     EditText weightInput;
     EditText thicknessInput;
     EditText profitInput;
+    EditText lengthInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class ExtraItemInfo extends InputChecker {
         weightInput = findViewById(R.id.editTextNumberDecimal2);
         thicknessInput = findViewById(R.id.editTextNumber2);
         profitInput = findViewById(R.id.editTextNumber3);
+        lengthInput = findViewById(R.id.editTextTextPersonName2);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extra_item_info);
@@ -54,7 +56,7 @@ public class ExtraItemInfo extends InputChecker {
         submitButton.setOnClickListener(v -> {
             if (allValid()) {
                 createCustomItem();
-                startActivity(new Intent(ExtraItemInfo.this, inventoryView.class));
+                startActivity(new Intent(ExtraItemInfo.this, InventoryView.class));
             } else {
                 createToast("All inputs are not filled");
             }
