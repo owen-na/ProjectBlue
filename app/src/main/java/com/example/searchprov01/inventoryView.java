@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class inventoryView extends AppCompatActivity {
+public class InventoryView extends AppCompatActivity {
 
 
 

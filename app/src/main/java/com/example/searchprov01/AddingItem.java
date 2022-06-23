@@ -34,6 +34,7 @@ public class AddingItem extends InputChecker {
 
         extraButton = findViewById(R.id.button6);
         exitButton = findViewById(R.id.button5);
+
         itemNameInput = findViewById(R.id.editTextTextPersonName);
         priceInput = findViewById(R.id.editTextNumberDecimal);
         amountInStockInput = findViewById(R.id.editTextNumber);
@@ -78,7 +79,7 @@ public class AddingItem extends InputChecker {
     }
 
     private void exitOut() {
-        exitButton.setOnClickListener(v -> startActivity(new Intent(AddingItem.this, inventoryView.class)));
+        exitButton.setOnClickListener(v -> startActivity(new Intent(AddingItem.this, InventoryView.class)));
     }
 
     public void createVisibleItem() {
