@@ -38,7 +38,7 @@ public class Login_page extends AppCompatActivity {
             public void onClick(View v) {
                 validateEmail();
                 validatePassword();
-
+                checkUser();
             }
         });
 
