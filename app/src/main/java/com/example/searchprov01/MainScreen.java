@@ -88,7 +88,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainScreen.this, inventoryView.class));
+                startActivity(new Intent(MainScreen.this, InventoryView.class));
             }
         });
     }

@@ -1,161 +1,99 @@
 package com.example.searchprov01;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
+import java.util.ArrayList;
 
-import java.io.FileWriter;
-import java.io.IOException;
+public class ExtraItemInfo extends InputChecker {
 
-public class ExtraItemInfo extends AppCompatActivity {
+    Button submitButton;
 
-    Button button;
-
-    boolean verification = false;
-
-    JSONArray secretValues;
-
-    int lastCounter;
-
-    int[] idNumber = new int[50];
-    double[] weight = new double[50];
-    double[] thickness = new double[50];
-    double[] profitRatio = new double[50];
+    List<Integer> ids = new ArrayList<>();
+    List<Double> weights = new ArrayList<>();
+    List<Double> thicknesses = new ArrayList<>();
+    List<Double> profitRatios = new ArrayList<>();
 
     EditText idNumberInput;
     EditText weightInput;
     EditText thicknessInput;
     EditText profitInput;
-
-    String idNumberConverter;
-    String weightConverter;
-    String thicknessConverter;
-    String profitConverter;
+    EditText lengthInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        button = findViewById(R.id.button7);
+        submitButton = findViewById(R.id.button7);
 
         idNumberInput = findViewById(R.id.editTextNumber4);
         weightInput = findViewById(R.id.editTextNumberDecimal2);
         thicknessInput = findViewById(R.id.editTextNumber2);
         profitInput = findViewById(R.id.editTextNumber3);
+        lengthInput = findViewById(R.id.editTextTextPersonName2);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extra_item_info);
 
-        checkVerification();
-        getIdNumber();
-        getWeight();
-        getThickness();
-        getProfitRatio();
+        toInventory();
     }
 
     private void toAddingItem() {
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    makeJsonObject(idNumber, weight, thickness, profitRatio);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                startActivity(new Intent(ExtraItemInfo.this, AddingItem.class));
+        submitButton.setOnClickListener(v -> {
+            toInventory();
+        });
+    }
+
+    private void toInventory() {
+        submitButton.setOnClickListener(v -> {
+            if (allValid()) {
+                createCustomItem();
+                startActivity(new Intent(ExtraItemInfo.this, InventoryView.class));
+            } else {
+                createToast("All inputs are not filled");
             }
         });
     }
 
-    private void getIdNumber() {
-        idNumberConverter = idNumberInput.getText().toString().trim();
-        if (idNumberConverter.isEmpty()) {
-            Toast.makeText(ExtraItemInfo.this, "Invalid ID, cannot be blank", Toast.LENGTH_SHORT).show();
-            verification = false;
-        } else {
-            idNumber[lastCounter] = Integer.parseInt(idNumberConverter);
-            verification = true;
+    @Override
+    protected boolean allValid() {
+        String id = stringify(idNumberInput);
+        String weight = stringify(weightInput);
+        String thickness = stringify(thicknessInput);
+        String profitRatio = stringify(profitInput);
+
+        if (intValid(id, "ID cannot be blank", "ID must be a whole number") &&
+                doubleValid(weight, "Weight must be greater than 0", "Weight must be a number") &&
+                doubleValid(thickness, "Thickness must be greater than 0", "Thickness must be a number") &&
+                doubleValid(profitRatio, "Profit Ratio must be greater than 0", "Profit Ratio must be a number")) {
+            ids.add(Integer.parseInt(id));
+            weights.add(Double.parseDouble(weight));
+            thicknesses.add(Double.parseDouble(thickness));
+            profitRatios.add(Double.parseDouble(profitRatio));
+            return true;
         }
+        return false;
     }
 
-    private void getWeight() {
-        double weightChecker;
-        weightConverter = weightInput.getText().toString().trim();
-        weightChecker = Double.parseDouble(weightConverter);
-        if (weightChecker <= 0.00) {
-            Toast.makeText(ExtraItemInfo.this, "Invalid Weight, must be greater than 0.00", Toast.LENGTH_SHORT).show();
-            verification = false;
-        } else {
-            weight[lastCounter] = weightChecker;
-            verification = true;
-        }
-    }
-
-    private void getThickness() {
-        double thicknessChecker;
-        thicknessConverter = thicknessInput.getText().toString().trim();
-        thicknessChecker = Double.parseDouble(thicknessConverter);
-        if (thicknessChecker <= 0.0) {
-            Toast.makeText(ExtraItemInfo.this, "Invalid Thickness, must be greater than 0.0", Toast.LENGTH_SHORT).show();
-            verification = false;
-        } else {
-            thickness[lastCounter] = thicknessChecker;
-            verification = true;
-        }
-    }
-
-    private void getProfitRatio() {
-        double ratioChecker;
-        profitConverter = profitInput.getText().toString().trim();
-        ratioChecker = Double.parseDouble(profitConverter);
-        if (ratioChecker <= 0.000) {
-            Toast.makeText(ExtraItemInfo.this, "Invaild Profit Ratio, must be greater than 0.000", Toast.LENGTH_SHORT).show();
-            verification = false;
-        } else {
-            profitRatio[lastCounter] = ratioChecker;
-            verification = true;
-        }
-    }
-
-    private void checkVerification () {
-        if (verification = true) {
-            toAddingItem();
-            lastCounter++;
-            toInventory();
-        }
-    }
-
-    private void makeJsonObject(int[] idNumber, double[] weight, double[] thickness, double[] profitRatio) {
-        JSONObject obj = new JSONObject();
-        try {
-            obj.put("iDNumber", idNumber[lastCounter]);
-            obj.put("weight", weight[lastCounter]);
-            obj.put("thickness", thickness[lastCounter]);
-            obj.put("profitRatio", profitRatio[lastCounter]);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        secretValues.put(obj);
-        try (FileWriter file = new FileWriter("SecretValues.json")) {
-            file.write(secretValues.toString());
-        } catch (IOException ie) {
-            ie.printStackTrace();
-        }
-    }
-
-    private void toInventory() {
-        startActivity(new Intent(ExtraItemInfo.this, inventoryView.class));
-    }
-
-    private void jsonToListing(View v) {
+    private void createCustomItem() {
+        View inventory, item;
+        item = getLayoutInflater().inflate(R.layout.item_info, null);
+        inventory = findViewById(R.id.inventoryShow);
+        inventory.addView(item);
+        // View customComponent = itembox.inflate(R.layout.item_info, null);
+        // PrivateInfo itemSecret = new PrivateInfo(idNumber[lastCounter], weight[lastCounter], thickness[lastCounter], profitRatio[lastCounter]);
 
     }
+
+    // 2 methods, one to store into the custom component, another to add it into the
+    // scrollView.
+
 }
