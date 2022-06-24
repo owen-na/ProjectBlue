@@ -1,99 +1,140 @@
 package com.example.searchprov01;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintSet;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.List;
-import java.util.ArrayList;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-public class ExtraItemInfo extends InputChecker {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-    Button submitButton;
+import java.io.FileWriter;
+import java.io.IOException;
 
-    List<Integer> ids = new ArrayList<>();
-    List<Double> weights = new ArrayList<>();
-    List<Double> thicknesses = new ArrayList<>();
-    List<Double> profitRatios = new ArrayList<>();
+public class ExtraItemInfo extends AppCompatActivity {
+
+    Button button;
+
+    boolean verification = false;
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
+
+    int idNumber;
+    double weight, thickness, profitRatio;
 
     EditText idNumberInput;
     EditText weightInput;
     EditText thicknessInput;
     EditText profitInput;
-    EditText lengthInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        submitButton = findViewById(R.id.button7);
+        button = findViewById(R.id.button7);
 
         idNumberInput = findViewById(R.id.editTextNumber4);
         weightInput = findViewById(R.id.editTextNumberDecimal2);
         thicknessInput = findViewById(R.id.editTextNumber2);
         profitInput = findViewById(R.id.editTextNumber3);
-        lengthInput = findViewById(R.id.editTextTextPersonName2);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extra_item_info);
 
-        toInventory();
-    }
-
-    private void toAddingItem() {
-        submitButton.setOnClickListener(v -> {
-            toInventory();
-        });
-    }
-
-    private void toInventory() {
-        submitButton.setOnClickListener(v -> {
-            if (allValid()) {
-                createCustomItem();
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setIdNumber();
+                setWeight();
+                setThickness();
+                setProfitRatio();
+                finailizeCreation();
                 startActivity(new Intent(ExtraItemInfo.this, InventoryView.class));
-            } else {
-                createToast("All inputs are not filled");
             }
         });
     }
 
-    @Override
-    protected boolean allValid() {
-        String id = stringify(idNumberInput);
-        String weight = stringify(weightInput);
-        String thickness = stringify(thicknessInput);
-        String profitRatio = stringify(profitInput);
 
-        if (intValid(id, "ID cannot be blank", "ID must be a whole number") &&
-                doubleValid(weight, "Weight must be greater than 0", "Weight must be a number") &&
-                doubleValid(thickness, "Thickness must be greater than 0", "Thickness must be a number") &&
-                doubleValid(profitRatio, "Profit Ratio must be greater than 0", "Profit Ratio must be a number")) {
-            ids.add(Integer.parseInt(id));
-            weights.add(Double.parseDouble(weight));
-            thicknesses.add(Double.parseDouble(thickness));
-            profitRatios.add(Double.parseDouble(profitRatio));
-            return true;
+    private void setIdNumber() {
+        try {
+            idNumber = Integer.parseInt(idNumberInput.getText().toString().trim());
+        } catch (NumberFormatException nfe) {
+            idNumberInput.setError("Invalid Input. Must be a Numeric Whole Number");
         }
-        return false;
     }
 
-    private void createCustomItem() {
-        View inventory, item;
-        item = getLayoutInflater().inflate(R.layout.item_info, null);
-        inventory = findViewById(R.id.inventoryShow);
-        inventory.addView(item);
-        // View customComponent = itembox.inflate(R.layout.item_info, null);
-        // PrivateInfo itemSecret = new PrivateInfo(idNumber[lastCounter], weight[lastCounter], thickness[lastCounter], profitRatio[lastCounter]);
+    private void setWeight() {
+        try {
+            weight = Double.parseDouble(weightInput.getText().toString().trim());
+            if (weight <= 0.00) {
+                weightInput.setError("Cannot be less than or equal to 0.00");
+            }
+        } catch (NumberFormatException nfe) {
+            weightInput.setError("Invalid Input. Must be a Numeric Number");
+        }
+    }
+
+    private void setThickness() {
+        try {
+            thickness = Double.parseDouble(thicknessInput.getText().toString().trim());
+            if (thickness <= 0.00) {
+                thicknessInput.setError("Cannot be less than or equal to 0.00");
+            }
+        } catch (NumberFormatException nfe) {
+            thicknessInput.setError("Invalid Input. Must be a Numeric Number");
+        }
+    }
+
+    private void setProfitRatio() {
+        try {
+            profitRatio = Double.parseDouble(profitInput.getText().toString().trim());
+            if (profitRatio <= 0.00) {
+                profitInput.setError("Cannot be less or equal of 0.00");
+            }
+        } catch (NumberFormatException nfe) {
+            profitInput.setError("Invalid Input. Must be a Numeric Number");
+        }
 
     }
 
-    // 2 methods, one to store into the custom component, another to add it into the
-    // scrollView.
+
+//    private void makeJsonObject(int[] idNumber, double[] weight, double[] thickness, double[] profitRatio) {
+//        JSONObject obj = new JSONObject();
+//        try {
+//            obj.put("iDNumber", idNumber[lastCounter]);
+//            obj.put("weight", weight[lastCounter]);
+//            obj.put("thickness", thickness[lastCounter]);
+//            obj.put("profitRatio", profitRatio[lastCounter]);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        secretValues.put(obj);
+//        try (FileWriter file = new FileWriter("SecretValues.json")) {
+//            file.write(secretValues.toString());
+//        } catch (IOException ie) {
+//            ie.printStackTrace();
+//        }
+//    }
+
+    private void finailizeCreation() {
+        rootNode = FirebaseDatabase.getInstance();
+        reference = rootNode.getReference("Item");
+
+        PrivateInfo item = new PrivateInfo(idNumber, weight, thickness, profitRatio);
+
+        reference.child("testHolder").setValue(item);
+    }
+
+    private void toInventory() {
+        startActivity(new Intent(ExtraItemInfo.this, InventoryView.class));
+    }
 
 }

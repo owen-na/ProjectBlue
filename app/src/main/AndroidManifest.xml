@@ -22,7 +22,7 @@
             android:name=".AddingItem"
             android:exported="false" />
         <activity
-            android:name=".inventoryView"
+            android:name=".InventoryView"
             android:exported="false" />
         <activity
             android:name=".MainScreen"

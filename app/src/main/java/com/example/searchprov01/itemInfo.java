@@ -1,15 +1,16 @@
 package com.example.searchprov01;
 
-public class itemInfo {
-    // private info
-    int iDNumber;
-    double weight;
-    double thickness;
-    double profitRatio;
+public class ItemInfo {
 
-    // public info
-    String itemName;
-    double price;
-    int amountInStock;
-    int length;
+    public String itemName;
+    public double price;
+    public int amountInStock, length;
+
+    public ItemInfo(String itemName, double price, int amountInStock, int length) {
+        this.itemName = itemName;
+        this.price = price;
+        this.amountInStock = amountInStock;
+        this.length = length;
+    }
+
 }
