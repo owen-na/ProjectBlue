@@ -57,7 +57,7 @@ public class ExtraItemInfo extends AppCompatActivity {
                 setThickness();
                 setProfitRatio();
                 finailizeCreation();
-                startActivity(new Intent(ExtraItemInfo.this, InventoryView.class));
+                toInventory();
             }
         });
     }
@@ -130,8 +130,10 @@ public class ExtraItemInfo extends AppCompatActivity {
 
         PrivateInfo item = new PrivateInfo(idNumber, weight, thickness, profitRatio);
 
-        reference.child("testHolder").setValue(item);
+        reference.child("Item").child("Private-Values").setValue(item);
     }
+
+    // Make sure this is the correct way to put it into the datebase.
 
     private void toInventory() {
         startActivity(new Intent(ExtraItemInfo.this, InventoryView.class));
