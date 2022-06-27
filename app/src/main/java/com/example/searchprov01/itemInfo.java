@@ -12,5 +12,5 @@ public class ItemInfo {
         this.amountInStock = amountInStock;
         this.length = length;
     }
-
+    
 }
