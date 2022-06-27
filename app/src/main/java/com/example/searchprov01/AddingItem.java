@@ -31,7 +31,7 @@ public class AddingItem extends AppCompatActivity{
     String itemName;
     double price;
     int amountInStock, length;
-
+// does it work?
 //    List<String> itemNames = new ArrayList<>();
 //    List<Double> prices = new ArrayList<>();
 //    List<Integer> stockAmounts = new ArrayList<>();
