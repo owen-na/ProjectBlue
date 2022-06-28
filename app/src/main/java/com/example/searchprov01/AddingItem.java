@@ -1,5 +1,6 @@
 package com.example.searchprov01;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,8 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class AddingItem extends AppCompatActivity{
 
@@ -140,6 +144,29 @@ public class AddingItem extends AppCompatActivity{
         ItemInfo item = new ItemInfo(itemName, price, amountInStock, length);
 
         reference.child("Item").child("Public-Values").setValue(item);
+
+        reference.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+
+            }
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                showData(dataSnapshot, item);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void showData(DataSnapshot dataSnapshot, ItemInfo item) {
+        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+            item = ds.getValue(ItemInfo.class);
+        }
     }
 
     private void exitOut() {
