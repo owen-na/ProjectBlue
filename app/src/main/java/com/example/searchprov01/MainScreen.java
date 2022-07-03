@@ -25,6 +25,10 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.searchprov01.databinding.ActivityMainScreenBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,10 +41,11 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
     Spinner spinner;
     Button button;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main_screen);
         button = findViewById(R.id.button4);
 
         toInventory();
@@ -48,14 +53,15 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
         binding = ActivityMainScreenBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-
         linechart = findViewById(R.id.profit_chart);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user =  mAuth.getCurrentUser();
+        if (user == null) {
+            startActivity(new Intent(MainScreen.this, Login_page.class));
+            finish();
+            return;
+        }
 
 
         // The comboBox (known as a Spinner)
@@ -84,7 +90,6 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
     }
 
     private void toInventory() {
-        button.setMovementMethod(LinkMovementMethod.getInstance());
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +133,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
 }
 
 

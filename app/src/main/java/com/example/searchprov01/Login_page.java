@@ -33,6 +33,11 @@ public class Login_page extends AppCompatActivity {
         passwordInput = findViewById(R.id.editTextTextPassword);
         loginButton = findViewById(R.id.button2);
 
+        if (mAuth.getCurrentUser() != null) {
+            finish();
+            return;
+        }
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +76,7 @@ public class Login_page extends AppCompatActivity {
         String realEmail, realPassword;
         realEmail = emailInput.getText().toString().trim();
         realPassword = passwordInput.getText().toString().trim();
-        mAuth.createUserWithEmailAndPassword(realEmail, realPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(realEmail, realPassword).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {

@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,15 +31,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean progressToMain = false;
-    boolean emailVerification = false;
-    boolean passwordVerification = false;
     boolean termsOfServiceVerification = false;
-    int[] userId = new int[50];
-    String[] userEmail = new String[50];
-    String[] userPassword = new String[50];
-    int uniqueUserCount = 0;
-
 
     String emailInput;
     String passwordInput;
@@ -70,21 +63,21 @@ public class MainActivity extends AppCompatActivity {
         passwordError=findViewById(R.id.textView14);
         confirmPassError=findViewById(R.id.textView5);
 
+        if (mAuth.getCurrentUser() != null) {
+            finish();
+            return;
+        }
+
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 validateEmail();
                 validatePassword();
                 checkToS();
-                verificationCheck();
                 createUser(emailInput, passwordInput);
             }
         });
 
-        if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), MainScreen.class));
-            finish();
-        }
     }
 
 
@@ -96,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
      * @return
      */
     private void validateEmail() {
-        String emailInput = email.getText().toString().trim();
+        emailInput = email.getText().toString().trim();
         if (emailInput.isEmpty()) {
             emailError.setText("Field can't be empty");
             return;
@@ -105,9 +98,7 @@ public class MainActivity extends AppCompatActivity {
             emailError.setText("Invalid Email");
             return;
         } else {
-            emailError.setText(""); // emailError.setError(null)
-            // emailVerification = true;
-            // userEmail[uniqueUserCount] = emailInput;
+            emailError.setText("");
             return;
         }
     }
@@ -120,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
      * @return
      */
     private void validatePassword() {
-        String passwordInput = password.getText().toString().trim();
+        passwordInput = password.getText().toString().trim();
         String ConfitmpasswordInput = confirmPassword.getText().toString().trim();
         if (passwordInput.isEmpty()) {
             passwordError.setText("Field can't be empty");
@@ -135,8 +126,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             confirmPassError.setText("");
             passwordError.setText("");
-            userPassword[uniqueUserCount] = ConfitmpasswordInput;
-            passwordVerification = true;
+            passwordInput = ConfitmpasswordInput;
             return;
         }
     }
@@ -148,24 +138,21 @@ public class MainActivity extends AppCompatActivity {
         } else {
             termsOfServiceVerification = true;
         }
-        // check.setOnClickListener(new View.OnClickListener() {
-        //     @Override
-        //     public void onClick(View v) {
-        //         if (check.isChecked()) {
-        //             termsOfServiceVerification = false;
-        //         } else {
-        //             termsOfServiceVerification = true;
-        //         }
-        //     }
-        // });
     }
 
-    private void createUser(String email, String confirmPassword) {
-        mAuth.createUserWithEmailAndPassword(email, confirmPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+    private void createUser(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    startActivity(new Intent(getApplicationContext(), MainScreen.class));
+                    User user = new User(email, password);
+                    FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).
+                            setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    startActivity(new Intent(MainActivity.this, MainScreen.class));
+                                }
+                            });
                 } else {
                     Toast.makeText(MainActivity.this, "Error!", Toast.LENGTH_SHORT).show();
                 }
@@ -174,14 +161,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void verificationCheck() {
-        if (emailVerification == true && passwordVerification == true && termsOfServiceVerification == true) {
-            progressToMain = true;
-            userId[uniqueUserCount] = uniqueUserCount;
-            uniqueUserCount++;
-            // makeJsonObject(userId, userEmail, userPassword, uniqueUserCount);
-        }
-    }
 
     private void agreeToToS() {
         TextView hyperLink = (TextView) findViewById(R.id.textView9);
@@ -206,23 +185,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    // public void makeJsonObject(int[] userID, String[] email, String[] realPassword, int uniqueUsers) {
-    //    JSONArray jsonArray = new JSONArray();
-    //    JSONObject obj = new JSONObject();
-    //        try {
-    //            obj.put("userId", userID[uniqueUsers]);
-    //            obj.put("email", email[uniqueUsers]);
-    //            obj.put("realPassword", realPassword[uniqueUsers]);
-    //        } catch (JSONException je) {
-    //            je.printStackTrace();
-    //        }
-    //        jsonArray.put(obj);
-    //    try (FileWriter file = new FileWriter("infoJson.json")) {
-    //        file.write(jsonArray.toString());
-    //   } catch (IOException ie) {
-    //        ie.printStackTrace();
-    //    }
-    // }
+    private void reload() {}
+
 
 }
 

@@ -3,12 +3,14 @@ package com.example.searchprov01;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -66,7 +68,7 @@ public class AddingItem extends AppCompatActivity{
                 setPrice();
                 setAmountInStock();
                 setLength();
-                createItem();
+                // createItem();
                 startActivity(new Intent(AddingItem.this, ExtraItemInfo.class));
             }
         });
@@ -138,36 +140,42 @@ public class AddingItem extends AppCompatActivity{
 //        return false;
 //    }
 
-    private void createItem() {
-        rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("Item");
-        ItemInfo item = new ItemInfo(itemName, price, amountInStock, length);
+//    private void createItem() {
+//        rootNode = FirebaseDatabase.getInstance();
+//        reference = rootNode.getReference(ItemInfo.class.getSimpleName());
+//        ItemInfo item = new ItemInfo(itemName, price, amountInStock, length);
 
-        reference.child("Item").child("Public-Values").setValue(item);
+//        reference.child("Item").child("Public-Values").setValue(item);
+//
+//        reference.child("Item").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
+//
+//            }
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                item = snapshot.getValue(ItemInfo.class);
+//                  showData(dataSnapshot, item);
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
-        reference.addValueEventListener(new ValueEventListener() {
+//    public Task<Void> add(ItemInfo item) {
+//        if (item == null) {
+//            reference.push().setValue(item);
+//        }
+//        return;
+//    }
 
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String prevChildKey) {
-
-            }
-
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                showData(dataSnapshot, item);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void showData(DataSnapshot dataSnapshot, ItemInfo item) {
-        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-            item = ds.getValue(ItemInfo.class);
-        }
-    }
+//    private void showData(DataSnapshot dataSnapshot, ItemInfo item) {
+//        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//            item = ds.getValue(ItemInfo.class);
+//        }
+//    }
 
     private void exitOut() {
         exitButton.setOnClickListener(v -> startActivity(new Intent(AddingItem.this, InventoryView.class)));
