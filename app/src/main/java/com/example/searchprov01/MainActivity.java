@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     String emailInput;
     String passwordInput;
     private FirebaseAuth mAuth;
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
+    FirebaseUser user;
 
     Button signUp;
     EditText email,password,confirmPassword;
@@ -145,12 +150,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    User user = new User(email, password);
+                    User newUser = new User(email, password);
                     FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).
-                            setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                          setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     startActivity(new Intent(MainActivity.this, MainScreen.class));
+                                    finish();
                                 }
                             });
                 } else {
@@ -180,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(MainActivity.this, Login_page.class));
+                finish();
             }
         });
     }

@@ -123,6 +123,11 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
         });
     }
 
+    private void toLoginPage() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this, Login_page.class));
+        finish();
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
