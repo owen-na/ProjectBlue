@@ -28,11 +28,6 @@
     <string name="raw_profits">Raw Profits</string>
     <string name="net_profits">Net Profits</string>
     <string name="inventory">Inventory</string>
-    <string-array name="time_amounts">
-        <item>Day</item>
-        <item>Week</item>
-        <item>Month</item>
-    </string-array>
     <string name="title_activity_inventory_view">inventoryView</string>
     <!-- Strings used for fragments for navigation -->
 

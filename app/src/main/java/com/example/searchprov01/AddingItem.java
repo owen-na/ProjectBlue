@@ -110,6 +110,11 @@ public class AddingItem extends AppCompatActivity{
         }
     }
 
+    private void addItem() {
+        rootNode = FirebaseDatabase.getInstance();
+        reference = rootNode.getReference("Users");
+    }
+
 //    private void toExtra() {
 //        extraButton.setOnClickListener(v -> {
 //            if (allValid()) {

@@ -39,7 +39,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
     private LineChart linechart;
 
     Spinner spinner;
-    Button button;
+    Button button, logOutButton;
 
 
     @Override
@@ -47,6 +47,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         button = findViewById(R.id.button4);
+        logOutButton = findViewById(R.id.LogOutButton);
 
         toInventory();
         spinnerFunctionailty();
@@ -63,6 +64,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
             return;
         }
 
+        toLoginPage();
 
         // The comboBox (known as a Spinner)
 
@@ -100,10 +102,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
 
     private void spinnerFunctionailty() {
         spinner = findViewById(R.id.time_intervals);
-        List<String> timeIntervals = new ArrayList<>();
-        timeIntervals.add(0, "1D");
-        timeIntervals.add("1W");
-        timeIntervals.add("1M");
+        String timeIntervals[] = {"1D" , "1W" , "1M"};
         ArrayAdapter<String> adapter;
         adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, timeIntervals);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -124,9 +123,14 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
     }
 
     private void toLoginPage() {
-        FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(this, Login_page.class));
-        finish();
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(MainScreen.this, Login_page.class));
+                finish();
+            }
+        });
     }
 
     @Override
