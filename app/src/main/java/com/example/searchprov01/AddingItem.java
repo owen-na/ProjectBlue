@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -70,6 +71,7 @@ public class AddingItem extends AppCompatActivity{
                 setLength();
                 // createItem();
                 startActivity(new Intent(AddingItem.this, ExtraItemInfo.class));
+                addItem();
             }
         });
     }
@@ -112,38 +114,10 @@ public class AddingItem extends AppCompatActivity{
 
     private void addItem() {
         rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("Users");
+        reference = rootNode.getReference("Users").child("Items").child("Public Values");
+        ItemInfo itemInfo = new ItemInfo(itemName, price, amountInStock, length);
+        reference.setValue(itemInfo);
     }
-
-//    private void toExtra() {
-//        extraButton.setOnClickListener(v -> {
-//            if (allValid()) {
-//                startActivity(new Intent(AddingItem.this, ExtraItemInfo.class));
-//            } else {
-//                createToast("All inputs are not filled");
-//            }
-//        });
-//    }
-
-//    @Override
-//    protected boolean allValid() {
-//        String itemName = stringify(itemNameInput);
-//        String price = stringify(priceInput);
-//        String stockAmount = stringify(amountInStockInput);
-//        String length = stringify(lengthInput);
-//
-//        if (stringValid(itemName, "Item Name cannot be left bank") &&
-//                doubleValid(price, "Raw Price must be greater than 0", "Raw Price must be a number") &&
-//                intValid(stockAmount, "There must be at least one stock", "Stock Amount must be a whole number") &&
-//                intValid(length, "Length must be longer than 0 inches", "Length must be a whole number")) {
-//            itemNames.add(itemName);
-//            prices.add(Double.parseDouble(price));
-//            stockAmounts.add(Integer.parseInt(stockAmount));
-//            lengths.add(Integer.parseInt(length));
-//            return true;
-//        }
-//        return false;
-//    }
 
 //    private void createItem() {
 //        rootNode = FirebaseDatabase.getInstance();

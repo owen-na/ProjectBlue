@@ -106,31 +106,11 @@ public class ExtraItemInfo extends AppCompatActivity {
     }
 
 
-//    private void makeJsonObject(int[] idNumber, double[] weight, double[] thickness, double[] profitRatio) {
-//        JSONObject obj = new JSONObject();
-//        try {
-//            obj.put("iDNumber", idNumber[lastCounter]);
-//            obj.put("weight", weight[lastCounter]);
-//            obj.put("thickness", thickness[lastCounter]);
-//            obj.put("profitRatio", profitRatio[lastCounter]);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        secretValues.put(obj);
-//        try (FileWriter file = new FileWriter("SecretValues.json")) {
-//            file.write(secretValues.toString());
-//        } catch (IOException ie) {
-//            ie.printStackTrace();
-//        }
-//    }
-
     private void finailizeCreation() {
         rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("Item");
-
+        reference = rootNode.getReference("Users").child("Items").child("Private Values");
         PrivateInfo item = new PrivateInfo(idNumber, weight, thickness, profitRatio);
-
-        reference.child("Item").child("Private-Values").setValue(item);
+        reference.setValue(item);
     }
 
     // Make sure this is the correct way to put it into the datebase.
