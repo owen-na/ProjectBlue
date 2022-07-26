@@ -33,7 +33,7 @@ public class AddingItem extends AppCompatActivity{
 
     String itemName;
     double price;
-    int amountInStock, length;
+    int amountInStock, length, serialNumber;
 
 //    List<String> itemNames = new ArrayList<>();
 //    List<Double> prices = new ArrayList<>();
@@ -114,9 +114,10 @@ public class AddingItem extends AppCompatActivity{
 
     private void addItem() {
         rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("Users").child("Items").child("Public Values");
+        reference = rootNode.getReference("Users");
         ItemInfo itemInfo = new ItemInfo(itemName, price, amountInStock, length);
-        reference.setValue(itemInfo);
+        serialNumber++;
+        reference.child("Items").child(String.valueOf(serialNumber)).child("Public Values").setValue(itemInfo);
     }
 
 //    private void createItem() {

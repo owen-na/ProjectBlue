@@ -5,16 +5,27 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 
 public class ItemBox extends AppCompatActivity {
 
     TextView replacingItemName, replacingPrice, replacingLength, replacingAmountInStock;
+
+    int serialNumber;
+
+    private FirebaseRecyclerOptions<ItemInfo> options;
+    private FirebaseRecyclerAdapter<ItemInfo, ItemAdapter> adapter;
+
+    private ItemAdapter recycleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +37,15 @@ public class ItemBox extends AppCompatActivity {
         replacingLength = findViewById(R.id.textView21);
         replacingAmountInStock = findViewById(R.id.textView24);
 
+
+
         getData();
         addToScrollView();
     }
 
     private void getData() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users/Items/Public Values");
+        serialNumber++;
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child("Items").child(String.valueOf(serialNumber)).child("Public Values");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -44,6 +58,8 @@ public class ItemBox extends AppCompatActivity {
                 replacingPrice.setText(price);
                 replacingLength.setText(length);
                 replacingAmountInStock.setText(amountInStock);
+
+
             }
 
             @Override

@@ -1,23 +1,16 @@
 package com.example.searchprov01;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class ExtraItemInfo extends AppCompatActivity {
 
@@ -28,7 +21,7 @@ public class ExtraItemInfo extends AppCompatActivity {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
 
-    int idNumber;
+    int idNumber, serialNumber;
     double weight, thickness, profitRatio;
 
     EditText idNumberInput;
@@ -56,7 +49,7 @@ public class ExtraItemInfo extends AppCompatActivity {
                 setWeight();
                 setThickness();
                 setProfitRatio();
-                finailizeCreation();
+                finalizeCreation();
                 toInventory();
             }
         });
@@ -106,11 +99,13 @@ public class ExtraItemInfo extends AppCompatActivity {
     }
 
 
-    private void finailizeCreation() {
+    private void finalizeCreation() {
         rootNode = FirebaseDatabase.getInstance();
-        reference = rootNode.getReference("Users").child("Items").child("Private Values");
+        serialNumber++;
+        reference = rootNode.getReference("Users").child("Items").child(String.valueOf(serialNumber)).child("Private Values");
         PrivateInfo item = new PrivateInfo(idNumber, weight, thickness, profitRatio);
         reference.setValue(item);
+
     }
 
     // Make sure this is the correct way to put it into the datebase.
