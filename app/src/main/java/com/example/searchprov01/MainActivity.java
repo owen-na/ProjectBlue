@@ -146,24 +146,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createUser(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    User newUser = new User(email, password);
-                    FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).
-                          setValue(newUser).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    startActivity(new Intent(MainActivity.this, MainScreen.class));
-                                    finish();
-                                }
-                            });
-                } else {
-                    Toast.makeText(MainActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-                }
-
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                User newUser = new User(email, password);
+                FirebaseDatabase.getInstance().getReference("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).
+                      setValue(newUser).addOnCompleteListener(task1 -> {
+                          startActivity(new Intent(MainActivity.this, MainScreen.class));
+                          finish();
+                      });
+            } else {
+                Toast.makeText(MainActivity.this, "Error!", Toast.LENGTH_SHORT).show();
             }
+
         });
     }
 
@@ -171,23 +165,15 @@ public class MainActivity extends AppCompatActivity {
     private void agreeToToS() {
         TextView hyperLink = (TextView) findViewById(R.id.textView9);
         hyperLink.setMovementMethod(LinkMovementMethod.getInstance());
-        hyperLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, Pop.class));
-            }
-        });
+        hyperLink.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, Pop.class)));
     }
 
     private void toLoginScreen() {
         TextView hyperLink = (TextView) findViewById(R.id.textView2);
         hyperLink.setMovementMethod(LinkMovementMethod.getInstance());
-        hyperLink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, Login_page.class));
-                finish();
-            }
+        hyperLink.setOnClickListener(view -> {
+            startActivity(new Intent(MainActivity.this, Login_page.class));
+            finish();
         });
     }
 

@@ -9,7 +9,7 @@
         <entry key="..\:/Internet DLs/SearchProv01/app/src/main/res/layout/activity_inventory_view.xml" value="0.36666666666666664" />
         <entry key="..\:/Internet DLs/SearchProv01/app/src/main/res/layout/activity_login_page.xml" value="0.33" />
         <entry key="..\:/Internet DLs/SearchProv01/app/src/main/res/layout/activity_main.xml" value="0.33" />
-        <entry key="..\:/Internet DLs/SearchProv01/app/src/main/res/layout/activity_main_screen.xml" value="0.33" />
+        <entry key="..\:/Internet DLs/SearchProv01/app/src/main/res/layout/activity_main_screen.xml" value="0.25" />
         <entry key="..\:/Internet DLs/SearchProv01/app/src/main/res/layout/content_inventory_view.xml" value="0.36666666666666664" />
         <entry key="..\:/Internet DLs/SearchProv01/app/src/main/res/layout/fragment_dashboard.xml" value="0.36102564102564105" />
         <entry key="..\:/Internet DLs/SearchProv01/app/src/main/res/layout/fragment_first.xml" value="0.36666666666666664" />
@@ -27,12 +27,5 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
-  </component>
-  <component name="VisualizationToolProject">
-    <option name="state">
-      <ProjectState>
-        <option name="scale" value="0.2" />
-      </ProjectState>
-    </option>
   </component>
 </project>

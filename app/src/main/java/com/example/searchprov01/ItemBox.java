@@ -1,6 +1,7 @@
 package com.example.searchprov01;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,10 +23,6 @@ public class ItemBox extends AppCompatActivity {
 
     int serialNumber;
 
-    private FirebaseRecyclerOptions<ItemInfo> options;
-    private FirebaseRecyclerAdapter<ItemInfo, ItemAdapter> adapter;
-
-    private ItemAdapter recycleView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
