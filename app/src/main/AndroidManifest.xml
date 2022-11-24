@@ -15,22 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SearchProv01"
         tools:targetApi="31">
-        <activity
-            android:name=".ExtraItemInfo"
-            android:exported="false" />
-        <activity
-            android:name=".AddingItem"
-            android:exported="false" />
-        <activity
-            android:name=".InventoryView"
-            android:exported="false" />
+        <activity android:name=".ExtraItemInfo" ></activity>
+        <activity android:name=".AddingItem" ></activity>
+        <activity android:name=".InventoryView"></activity>
         <activity
             android:name=".MainScreen"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_main_screen" />
         <activity
             android:name=".Login_page"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".InitialLoading"
             android:exported="true">
