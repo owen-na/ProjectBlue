@@ -36,11 +36,12 @@ public class MainActivity extends AppCompatActivity {
 
     String emailInput;
     String passwordInput;
+    boolean checker = true;
     private FirebaseAuth mAuth;
 
-    FirebaseDatabase rootNode;
-    DatabaseReference reference;
-    FirebaseUser user;
+//    FirebaseDatabase rootNode;
+//    DatabaseReference reference;
+//    FirebaseUser user;
 
     Button signUp;
     EditText email,password,confirmPassword;
@@ -79,7 +80,9 @@ public class MainActivity extends AppCompatActivity {
                 validateEmail();
                 validatePassword();
                 checkToS();
-                createUser(emailInput, passwordInput);
+                if (checker = true) {
+                    createUser(emailInput, passwordInput);
+                }
             }
         });
 
@@ -97,13 +100,16 @@ public class MainActivity extends AppCompatActivity {
         emailInput = email.getText().toString().trim();
         if (emailInput.isEmpty()) {
             emailError.setText("Field can't be empty");
+            checker = false;
             return;
 
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             emailError.setText("Invalid Email");
+            checker = false;
             return;
         } else {
             emailError.setText("");
+            checker = true;
             return;
         }
     }
@@ -120,20 +126,24 @@ public class MainActivity extends AppCompatActivity {
         String ConfitmpasswordInput = confirmPassword.getText().toString().trim();
         if (passwordInput.isEmpty()) {
             passwordError.setText("Field can't be empty");
+            checker = false;
             return;
         }  if (passwordInput.length()<5) {
             passwordError.setText("Password must be at least 5 characters");
+            checker = false;
             return;
         }
         if (!passwordInput.equals(ConfitmpasswordInput)) {
             confirmPassError.setText("Passwords do not match");
-            return;
-        } else {
-            confirmPassError.setText("");
-            passwordError.setText("");
-            passwordInput = ConfitmpasswordInput;
+            checker = false;
             return;
         }
+        confirmPassError.setText("");
+        passwordError.setText("");
+        passwordInput = ConfitmpasswordInput;
+        checker = true;
+        return;
+
     }
 
     private void checkToS() {
