@@ -28,6 +28,7 @@ public class InventoryView extends AppCompatActivity {
     private RecyclerView recycleView;
 
     Button toAddItem;
+    Button goBack;
 
     DatabaseReference reference;
 
@@ -40,12 +41,14 @@ public class InventoryView extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference().child("Users");
 
         toAddItem = findViewById(R.id.AddItem);
+        goBack = findViewById(R.id.backToMainScreen);
 
         recycleView = findViewById(R.id.inventoryShow);
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
 
         toAddingItem();
+        toMainScreen();
 
         options = new FirebaseRecyclerOptions.Builder<ItemInfo>().setQuery(reference, ItemInfo.class).build();
         adapter = new FirebaseRecyclerAdapter<ItemInfo, ItemAdapter>(options) {
@@ -67,5 +70,8 @@ public class InventoryView extends AppCompatActivity {
         toAddItem.setOnClickListener(v -> startActivity(new Intent(InventoryView.this, AddingItem.class)));
     }
 
+    private void toMainScreen() {
+        goBack.setOnClickListener(v -> startActivity(new Intent(InventoryView.this, AddingItem.class)));
+    }
 
 }
