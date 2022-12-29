@@ -167,7 +167,7 @@ public class AddingItem extends AppCompatActivity{
 
     private void exitOut() {
         exitButton.setOnClickListener(v -> startActivity(new Intent(AddingItem.this, InventoryView.class)));
-        finish();
+        // finish();
     }
 
 }
