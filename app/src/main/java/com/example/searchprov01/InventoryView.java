@@ -1,13 +1,10 @@
 package com.example.searchprov01;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,11 +24,8 @@ public class InventoryView extends AppCompatActivity {
 
     private RecyclerView recycleView;
 
-    Button toAddItem;
-
     DatabaseReference reference;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,13 +33,9 @@ public class InventoryView extends AppCompatActivity {
 
         reference = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        toAddItem = findViewById(R.id.AddItem);
-
         recycleView = findViewById(R.id.inventoryShow);
         recycleView.setHasFixedSize(true);
         recycleView.setLayoutManager(new LinearLayoutManager(this));
-
-        toAddingItem();
 
         options = new FirebaseRecyclerOptions.Builder<ItemInfo>().setQuery(reference, ItemInfo.class).build();
         adapter = new FirebaseRecyclerAdapter<ItemInfo, ItemAdapter>(options) {
@@ -62,10 +52,5 @@ public class InventoryView extends AppCompatActivity {
             }
         };
     }
-
-    private void toAddingItem() {
-        toAddItem.setOnClickListener(v -> startActivity(new Intent(InventoryView.this, AddingItem.class)));
-    }
-
 
 }

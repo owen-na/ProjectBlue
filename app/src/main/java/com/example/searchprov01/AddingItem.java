@@ -43,9 +43,6 @@ public class AddingItem extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_adding_item);
-
         extraButton = findViewById(R.id.button6);
         exitButton = findViewById(R.id.button5);
 
@@ -54,10 +51,13 @@ public class AddingItem extends AppCompatActivity{
         amountInStockInput = findViewById(R.id.editTextNumber);
         lengthInput = findViewById(R.id.editTextTextPersonName2);
 
-        // itemName = itemNameInput.getText().toString().trim();
-        // price = Double.parseDouble(priceInput.getText().toString().trim());
-        // amountInStock = Integer.parseInt(amountInStockInput.getText().toString().trim());
-        // length = Integer.parseInt(lengthInput.getText().toString().trim());
+        itemName = itemNameInput.getText().toString().trim();
+        price = Double.parseDouble(priceInput.getText().toString().trim());
+        amountInStock = Integer.parseInt(amountInStockInput.getText().toString().trim());
+        length = Integer.parseInt(lengthInput.getText().toString().trim());
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_adding_item);
 
 //        toExtra();
         exitOut();
@@ -79,8 +79,6 @@ public class AddingItem extends AppCompatActivity{
     private void setItemName() {
         if (itemName.isEmpty()) {
             itemNameInput.setError("Cannot blank");
-        } else {
-            itemName = itemNameInput.getText().toString().trim();
         }
     }
 
@@ -88,8 +86,6 @@ public class AddingItem extends AppCompatActivity{
         try {
             if (price <= 0.00) {
                 priceInput.setError("Cannot be less than or equal to 0");
-            } else {
-                price = Double.parseDouble(priceInput.getText().toString().trim());
             }
         } catch (NumberFormatException nfe) {
             priceInput.setError("Invalid Input. Must be Numeric");
@@ -100,8 +96,6 @@ public class AddingItem extends AppCompatActivity{
         try {
             if (amountInStock <= 0) {
                 amountInStockInput.setError("Cannot be less than or equal to 0");
-            } else {
-                amountInStock = Integer.parseInt(amountInStockInput.getText().toString().trim());
             }
         } catch (NumberFormatException nfe) {
             amountInStockInput.setError("Invalid Input. Must be a Numeric Whole Number");
@@ -112,8 +106,6 @@ public class AddingItem extends AppCompatActivity{
         try {
             if (length <= 0) {
                 lengthInput.setError("Cannot be less than or equal to 0");
-            } else {
-                length = Integer.parseInt(lengthInput.getText().toString().trim());
             }
         } catch (NumberFormatException nfe) {
             lengthInput.setError("Invalid Input. Must be a Numeric Whole Number");
@@ -167,7 +159,6 @@ public class AddingItem extends AppCompatActivity{
 
     private void exitOut() {
         exitButton.setOnClickListener(v -> startActivity(new Intent(AddingItem.this, InventoryView.class)));
-        finish();
     }
 
 }

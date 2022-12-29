@@ -61,7 +61,6 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemS
 
     private void toInventory() {
         button.setOnClickListener(v -> startActivity(new Intent(MainScreen.this, InventoryView.class)));
-        finish();
     }
 
     private void spinnerFunctionality() {
